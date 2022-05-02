@@ -24,7 +24,9 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A template of nestjs with graphql and prisma
+
+> based from [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
 
@@ -43,6 +45,22 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+```
+
+## Prisma
+
+```bash
+# setup prisma for development
+$ npm run prisma:dev
+
+# setup prisma for test
+$ npm run prisma:test
+
+# run prisma docs
+$ npm run prisma:docs
+
+# run prisma studio
+$ npm run prisma:studio
 ```
 
 ## Test
