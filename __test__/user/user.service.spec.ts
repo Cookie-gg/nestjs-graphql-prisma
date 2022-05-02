@@ -22,9 +22,7 @@ describe('UserService', () => {
     prisma = module.get<PrismaService>(PrismaService);
   });
 
-  afterAll(async () => {
-    prisma.$disconnect();
-  });
+  afterAll(() => prisma.$disconnect());
 
   it('should be defined', () => {
     expect(userService).toBeDefined();
