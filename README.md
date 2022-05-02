@@ -63,6 +63,21 @@ $ npm run prisma:docs
 $ npm run prisma:studio
 ```
 
+## Databse
+
+You can use [MongoDB](https://github.com/Cookie-gg/mongodb-docker) or [MySQL](https://github.com/Cookie-gg/mysql-docker)
+
+```bash
+# build container
+docker compose up (-d: run in the background)
+
+# if you use mongo image
+docker compose exec mongodb mongo --eval "rs.initiate({_id: 'rs0', members: [{_id: 0, host: 'localhost:27017'}]});"
+
+# stop container
+docker compose down
+```
+
 ## Test
 
 ```bash
