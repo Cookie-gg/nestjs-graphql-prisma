@@ -33,3 +33,13 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# env 
+.env
+.env.**
+
+# models generated automatically by nestjs-graphql-prisma
+src/models
+
+prisma/migrations
+prisma/docs

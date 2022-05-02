@@ -1,0 +1,52 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator docs {
+  provider = "node node_modules/prisma-docs-generator"
+  output   = "../../docs"
+}
+
+generator nestgraphql {
+  provider               = "node node_modules/prisma-nestjs-graphql"
+  output                 = "../src/models"
+  // create entry point
+  reExport               = Directories
+  // use class validator
+  fields_Validator_from  = "class-validator"
+  fields_Validator_input = true
+  // add validation which matches regexp of CreateOne*Arg
+  // https://github.com/unlight/prisma-nestjs-graphql#decorate
+  decorate_1_type        = "CreateOne*Args"
+  decorate_1_field       = data
+  decorate_1_name        = ValidateNested
+  decorate_1_from        = "class-validator"
+  decorate_1_arguments   = "[]"
+  decorate_2_type        = "CreateOne*Args"
+  decorate_2_field       = data
+  decorate_2_from        = "class-transformer"
+  decorate_2_arguments   = "['() => {propertyType.0}']"
+  decorate_2_name        = Type
+}
+
+model User {
+  /// @Field(() => ID)
+  id       Int    @id @default(autoincrement())
+  /// @Validator.@IsEmail()
+  email    String @unique
+  /// @Validator.IsNotEmpty()
+  name     String
+  /// @Validator.MinLength(8)
+  password String
+
+  published Boolean?
+  /// @HideField({ input: true, output: false })
+  createdAt DateTime @default(now())
+  /// @HideField({ input: true, output: false })
+  updatedAt DateTime @updatedAt
+}

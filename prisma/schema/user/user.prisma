@@ -1,0 +1,16 @@
+model User {
+  /// @Field(() => ID)
+  id       Int    @id @default(autoincrement()) // id String @id @default(auto()) @map("_id") @db.ObjectId
+  /// @Validator.@IsEmail()
+  email    String @unique
+  /// @Validator.IsNotEmpty()
+  name     String
+  /// @Validator.MinLength(8)
+  password String
+
+  published Boolean? @default(false)
+  /// @HideField({ input: true, output: false })
+  createdAt DateTime @default(now())
+  /// @HideField({ input: true, output: false })
+  updatedAt DateTime @updatedAt
+}
