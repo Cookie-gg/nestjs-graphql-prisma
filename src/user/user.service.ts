@@ -1,5 +1,5 @@
 import { Injectable, NotAcceptableException } from '@nestjs/common';
-import { UserCreateInput } from '~/models/user';
+import { UserCreateInput, UserWhereUniqueInput } from '~/models/user';
 import { PrismaService } from '~/prisma.service';
 
 @Injectable()
@@ -12,9 +12,9 @@ export class UserService {
   }
 
   // delete user
-  async delete(id?: number, email?: string) {
-    this.searchValidation(id, email);
-    return await this.prisma.user.delete({ where: { id } || { email } });
+  async delete(data: UserWhereUniqueInput) {
+    const where = this.searchValidation(data);
+    return await this.prisma.user.delete({ where });
   }
 
   // get all users
@@ -23,13 +23,14 @@ export class UserService {
   }
 
   // get user
-  async find(id?: number, email?: string) {
-    this.searchValidation(id, email);
-    return await this.prisma.user.findUnique({ where: { id } || { email } });
+  async find(data: UserWhereUniqueInput) {
+    const where = this.searchValidation(data);
+    return await this.prisma.user.findUnique({ where });
   }
 
-  searchValidation(id?: number, email?: string) {
+  searchValidation({ id, email }: UserWhereUniqueInput) {
     if (!email && !id)
       throw new NotAcceptableException('at least email or id is required');
+    return id ? { id } : { email };
   }
 }

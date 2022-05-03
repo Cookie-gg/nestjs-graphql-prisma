@@ -1,5 +1,5 @@
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
-import { User, UserCreateInput } from '~/models/user';
+import { User, UserCreateInput, UserWhereUniqueInput } from '~/models/user';
 import { UserService } from '~/user/user.service';
 import * as bcrypt from 'bcrypt';
 
@@ -14,19 +14,13 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  deleteUser(
-    @Args('id', { nullable: true }) id?: number,
-    @Args('email', { nullable: true }) email?: string,
-  ) {
-    return this.userService.delete(id, email);
+  deleteUser(@Args('args') args: UserWhereUniqueInput) {
+    return this.userService.delete(args);
   }
 
   @Query(() => User)
-  getUser(
-    @Args('id', { nullable: true }) id?: number,
-    @Args('email', { nullable: true }) email?: string,
-  ) {
-    return this.userService.find(id, email);
+  getUser(@Args('args') args: UserWhereUniqueInput) {
+    return this.userService.find(args);
   }
 
   @Query(() => [User])
