@@ -1,0 +1,10 @@
+query {
+  getUser(args: { email: "test@example.com" }) {
+    id
+    name
+    email
+    published
+    createdAt
+    updatedAt
+  }
+}

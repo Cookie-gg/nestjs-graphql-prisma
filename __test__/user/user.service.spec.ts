@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { mocks } from '~/mocks';
 import { UserCreateInput } from '~/models/user';
 import { PrismaService } from '~/prisma.service';
 import { UserService } from '~/user/user.service';
@@ -6,12 +7,6 @@ import { UserService } from '~/user/user.service';
 describe('UserService', () => {
   let userService: UserService;
   let prisma: PrismaService;
-  const mock: UserCreateInput = {
-    name: 'test',
-    email: 'test@example.com',
-    password: 'hogehoge',
-    published: false,
-  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -29,26 +24,25 @@ describe('UserService', () => {
   });
 
   it('should create a user at first', async () => {
-    const data: UserCreateInput = {
+    const inputs: UserCreateInput = {
       name: 'test',
       email: 'test@example.com',
       password: 'hogehoge',
-      published: false,
     };
-    const user = await userService.create(data);
-    expect(user).toStrictEqual(expect.objectContaining({ id: 1, ...data }));
+    const user = await userService.create(inputs);
+    expect(user).toStrictEqual(expect.objectContaining(mocks.user.user));
   });
 
-  it('should find a user by email or id', async () => {
-    const id = 1;
-    const user = await userService.find(id);
-    expect(user).toStrictEqual(expect.objectContaining({ id, ...mock }));
+  it('should find a user by id', async () => {
+    const { id } = mocks.user.user;
+    const userById = await userService.find({ id });
+    expect(userById).toStrictEqual(expect.objectContaining(mocks.user.user));
   });
 
   it('should delete a user by email or id', async () => {
-    const id = 1;
-    await userService.delete(id);
-    const user = await userService.find(id);
+    const { id } = mocks.user.user;
+    await userService.delete({ id });
+    const user = await userService.find({ id });
     expect(user).toBeNull();
   });
 });

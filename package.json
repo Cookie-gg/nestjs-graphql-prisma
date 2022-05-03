@@ -30,7 +30,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "run-s test:cleanup && dotenv -e .env.test -- jest --config jest-e2e.config.js"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.0.9",
@@ -54,6 +54,7 @@
     "rxjs": "^7.5.5"
   },
   "devDependencies": {
+    "@jagi/jest-transform-graphql": "^1.0.2",
     "@nestjs/cli": "^8.2.5",
     "@nestjs/schematics": "^8.0.10",
     "@nestjs/testing": "^8.4.4",
