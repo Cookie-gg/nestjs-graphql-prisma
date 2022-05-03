@@ -1,9 +1,7 @@
-import { UserCreateInput } from '~/models/user';
-
-const user: UserCreateInput = {
+const user = {
+  id: 1,
   name: 'test',
   email: 'test@example.com',
-  password: 'hogehoge',
   published: false,
 };
 
