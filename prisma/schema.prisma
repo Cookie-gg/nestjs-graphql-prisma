@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
@@ -36,7 +36,7 @@ generator nestgraphql {
 
 model User {
   /// @Field(() => ID)
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
   /// @Validator.@IsEmail()
   email    String @unique
   /// @Validator.IsNotEmpty()
@@ -44,7 +44,7 @@ model User {
   /// @Validator.MinLength(8)
   password String
 
-  published Boolean?  @default(false)
+  published Boolean? @default(false)
   /// @HideField({ input: true, output: false })
   createdAt DateTime @default(now())
   /// @HideField({ input: true, output: false })
