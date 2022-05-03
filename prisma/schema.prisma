@@ -44,7 +44,7 @@ model User {
   /// @Validator.MinLength(8)
   password String
 
-  published Boolean?
+  published Boolean?  @default(false)
   /// @HideField({ input: true, output: false })
   createdAt DateTime @default(now())
   /// @HideField({ input: true, output: false })
