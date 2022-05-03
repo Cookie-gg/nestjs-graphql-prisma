@@ -67,6 +67,9 @@ $ npm run prisma:studio
 
 You can use [MongoDB](https://github.com/Cookie-gg/mongodb-docker) or [MySQL](https://github.com/Cookie-gg/mysql-docker)
 
+> if you use mongo image,
+> see [Prisma Docs](https://www.prisma.io/docs/concepts/database-connectors/mongodb)
+
 ```bash
 # build container
 docker compose up (-d: run in the background)
