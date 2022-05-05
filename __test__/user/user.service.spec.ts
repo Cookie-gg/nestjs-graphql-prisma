@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { AppModule } from '~/app.module';
 import { mocks } from '~/mocks';
 import { UserCreateInput } from '~/models/user';
 import { PrismaService } from '~/prisma.service';
@@ -10,7 +11,7 @@ describe('UserService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UserService, PrismaService],
+      imports: [AppModule],
     }).compile();
 
     userService = module.get<UserService>(UserService);
@@ -26,6 +27,7 @@ describe('UserService', () => {
   it('should create a user at first', async () => {
     const inputs: UserCreateInput = {
       name: 'test',
+      uid: 't_e_s_t',
       email: 'test@example.com',
       password: 'hogehoge',
     };
@@ -37,6 +39,17 @@ describe('UserService', () => {
     const { id } = mocks.user.user;
     const userById = await userService.find({ id });
     expect(userById).toStrictEqual(expect.objectContaining(mocks.user.user));
+  });
+
+  it('should update a user name', async () => {
+    const { id } = mocks.user.user;
+    const user = await userService.update({
+      where: { id },
+      data: { name: { set: 'updated name' } },
+    });
+    expect(user).toStrictEqual(
+      expect.objectContaining({ ...mocks.user.user, name: 'updated name' }),
+    );
   });
 
   it('should delete a user by email or id', async () => {

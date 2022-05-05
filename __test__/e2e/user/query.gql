@@ -1,6 +1,7 @@
 query {
   getUser(args: { email: "test@example.com" }) {
     id
+    uid
     name
     email
     published

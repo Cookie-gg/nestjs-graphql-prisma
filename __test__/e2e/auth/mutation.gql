@@ -1,0 +1,45 @@
+mutation {
+  login(inputs: { uniqueInfo: "test@example.com", password: "hogehoge" }) {
+    user {
+      id
+      uid
+      name
+      email
+      published
+      createdAt
+      updatedAt
+    }
+    token
+    refreshToken
+  }
+}
+mutation {
+  status {
+    user {
+      id
+      uid
+      name
+      email
+      published
+      createdAt
+      updatedAt
+    }
+    token
+    refreshToken
+  }
+}
+mutation {
+  refresh {
+    user {
+      id
+      uid
+      name
+      email
+      published
+      createdAt
+      updatedAt
+    }
+    token
+    refreshToken
+  }
+}

@@ -1,0 +1,26 @@
+mutation {
+  createUser(
+    args: { name: "test", uid: "t_e_s_t", email: "test@example.com", password: "hogehoge" }
+  ) {
+    user {
+      id
+      uid
+      name
+      email
+      published
+      createdAt
+      updatedAt
+    }
+  }
+}
+mutation {
+  deleteUser(args: { email: "test@example.com" }) {
+    id
+    uid
+    name
+    email
+    published
+    createdAt
+    updatedAt
+  }
+}

@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { PrismaService } from './prisma.service';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UserModule } from './user/user.module';
       autoSchemaFile: '../schema.graphql',
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

@@ -1,6 +1,6 @@
 const user = {
-  id: 1,
   name: 'test',
+  uid: 't_e_s_t',
   email: 'test@example.com',
   published: false,
 };
