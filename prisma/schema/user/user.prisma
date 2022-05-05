@@ -1,6 +1,7 @@
 model User {
   /// @Field(() => ID)
   id           Int      @id @default(autoincrement())
+  /// @Validator.IsLowercase()
   uid          String   @unique
   /// @Validator.@IsEmail()
   email        String   @unique
