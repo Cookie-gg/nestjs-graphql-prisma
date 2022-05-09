@@ -36,15 +36,13 @@ describe('UserService', () => {
   });
 
   it('should find a user by id', async () => {
-    const { id } = mocks.user.user;
-    const userById = await userService.find({ id });
+    const userById = await userService.find({ id: 1 });
     expect(userById).toStrictEqual(expect.objectContaining(mocks.user.user));
   });
 
   it('should update a user name', async () => {
-    const { id } = mocks.user.user;
     const user = await userService.update({
-      where: { id },
+      where: { id: 1 },
       data: { name: { set: 'updated name' } },
     });
     expect(user).toStrictEqual(
@@ -53,9 +51,8 @@ describe('UserService', () => {
   });
 
   it('should delete a user by email or id', async () => {
-    const { id } = mocks.user.user;
-    await userService.delete({ id });
-    const user = await userService.find({ id });
+    await userService.delete({ id: 1 });
+    const user = await userService.find({ id: 1 });
     expect(user).toBeNull();
   });
 });
