@@ -1,9 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppModule } from '~/app.module';
+import { AppModule } from '~/modules/app';
 import { mocks } from '~/mocks';
-import { UserCreateInput } from '~/models/user';
-import { PrismaService } from '~/prisma.service';
-import { UserService } from '~/user/user.service';
+import { PrismaService } from '~/services/prisma';
+import { UserService } from '~/services/user';
 
 describe('UserService', () => {
   let userService: UserService;
@@ -15,6 +14,7 @@ describe('UserService', () => {
     }).compile();
 
     userService = module.get<UserService>(UserService);
+    userService.clear();
     prisma = module.get<PrismaService>(PrismaService);
   });
 
@@ -25,34 +25,28 @@ describe('UserService', () => {
   });
 
   it('should create a user at first', async () => {
-    const inputs: UserCreateInput = {
-      name: 'test',
-      uid: 't_e_s_t',
-      email: 'test@example.com',
-      password: 'hogehoge',
-    };
-    const user = await userService.create(inputs);
+    const user = await userService.create(mocks.user.user);
     expect(user).toStrictEqual(expect.objectContaining(mocks.user.user));
   });
 
   it('should find a user by id', async () => {
-    const userById = await userService.find({ id: 1 });
-    expect(userById).toStrictEqual(expect.objectContaining(mocks.user.user));
+    const user = await userService.find({ uid: mocks.user.user.uid });
+    expect(user).toStrictEqual(expect.objectContaining(mocks.user.user));
   });
 
   it('should update a user name', async () => {
     const user = await userService.update({
-      where: { id: 1 },
-      data: { name: { set: 'updated name' } },
+      where: { uid: mocks.user.user.uid },
+      data: { name: { set: mocks.user.updatedName } },
     });
     expect(user).toStrictEqual(
-      expect.objectContaining({ ...mocks.user.user, name: 'updated name' }),
+      expect.objectContaining({ ...mocks.user.user, name: mocks.user.updatedName }),
     );
   });
 
   it('should delete a user by email or id', async () => {
-    await userService.delete({ id: 1 });
-    const user = await userService.find({ id: 1 });
+    await userService.delete({ uid: mocks.user.user.uid });
+    const user = await userService.find({ uid: mocks.user.user.uid });
     expect(user).toBeNull();
   });
 });

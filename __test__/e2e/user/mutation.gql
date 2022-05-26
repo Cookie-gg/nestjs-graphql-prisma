@@ -1,12 +1,19 @@
 mutation {
   createUser(
-    args: { name: "test", uid: "t_e_s_t", email: "test@example.com", password: "hogehoge" }
+    args: {
+      name: "test"
+      uid: "t_e_s_t"
+      email: "test@example.com"
+      password: "hogehoge"
+      published: false
+    }
   ) {
     user {
       id
       uid
       name
       email
+      password
       published
       createdAt
       updatedAt
@@ -14,11 +21,12 @@ mutation {
   }
 }
 mutation {
-  deleteUser(args: { email: "test@example.com" }) {
+  deleteUser(args: { uid: "t_e_s_t" }) {
     id
     uid
     name
     email
+    password
     published
     createdAt
     updatedAt

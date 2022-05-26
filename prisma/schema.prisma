@@ -1,3 +1,5 @@
+
+    
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -9,12 +11,12 @@ generator client {
 
 generator docs {
   provider = "node node_modules/prisma-docs-generator"
-  output   = "../../docs"
+  output   = "../docs"
 }
 
 generator nestgraphql {
   provider               = "node node_modules/prisma-nestjs-graphql"
-  output                 = "../src/models"
+  output                 = "../src/domain/entities"
   // create entry point
   reExport               = Directories
   // use class validator
@@ -51,3 +53,5 @@ model User {
   /// @HideField({ input: true, output: false })
   updatedAt DateTime @updatedAt
 }
+
+  

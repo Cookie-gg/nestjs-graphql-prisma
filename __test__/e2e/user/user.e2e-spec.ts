@@ -1,14 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '~/app.module';
+import { AppModule } from '~/modules/app';
 import USER_QUERY from './query.gql';
 import USER_MUTATION from './mutation.gql';
 import { print } from 'graphql';
 import { mocks } from '~/mocks';
-import { User } from '~/models/user';
+import { User } from '~/domain/entities/user';
 import { Response } from '~/types/api';
-import { Auth } from '~/auth/auth.model';
+import { Auth } from '~/domain/models/auth';
+import { NestFastifyApplication, FastifyAdapter } from '@nestjs/platform-fastify';
+import { UserService } from '~/services/user';
 
 describe('1. User (e2e)', () => {
   let app: INestApplication;
@@ -20,9 +22,11 @@ describe('1. User (e2e)', () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
-    app = moduleFixture.createNestApplication();
+    app = moduleFixture.createNestApplication<NestFastifyApplication>(new FastifyAdapter());
     await app.init();
+    await app.getHttpAdapter().getInstance().ready();
     req = request(app.getHttpServer());
+    moduleFixture.get<UserService>(UserService).clear();
   });
 
   afterAll(() => app.close());

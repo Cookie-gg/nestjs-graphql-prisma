@@ -1,9 +1,10 @@
 query {
-  getUser(args: { email: "test@example.com" }) {
+  getUser(args: { uid: "t_e_s_t" }) {
     id
     uid
     name
     email
+    password
     published
     createdAt
     updatedAt
